@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="StudyBuddy Live">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#14b8a6"/>
+      <stop offset="1" stop-color="#134e4a"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#g)"/>
+  <circle cx="501" cy="167" r="170" fill="#fff" opacity="0.08"/>
+  <circle cx="291" cy="317" r="120" fill="#fff" opacity="0.06"/>
+  <text x="400" y="225" text-anchor="middle" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="150" font-weight="700" fill="#fff" opacity="0.92">SL</text>
+  <text x="400" y="360" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" fill="#fff" opacity="0.8">StudyBuddy Live</text>
+</svg>

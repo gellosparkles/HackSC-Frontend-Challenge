@@ -1,0 +1,430 @@
+/* ==========================================================================
+   HackSC Frontend Challenge — styles
+   Everything you need is here. Section 4 lists classes you can use for the
+   parts you build yourself (loading/error states and the detail view).
+   ========================================================================== */
+
+/* 1. Tokens ---------------------------------------------------------------- */
+:root {
+  --color-bg: #faf8f5;
+  --color-surface: #ffffff;
+  --color-text: #1c1917;
+  --color-muted: #6b6560;
+  --color-border: #e7e2dc;
+  --color-accent: #990000; /* cardinal */
+  --color-accent-contrast: #ffffff;
+  --color-gold: #f2b705;
+  --color-like: #d61f45;
+  --color-dislike: #57534e;
+  --color-error-bg: #fdecec;
+  --color-error-text: #9f1239;
+  --color-backdrop: rgba(20, 16, 12, 0.6);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-dialog: 0 24px 64px rgba(0, 0, 0, 0.3);
+  --radius: 12px;
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #151311;
+    --color-surface: #1f1c1a;
+    --color-text: #f3efea;
+    --color-muted: #a8a19a;
+    --color-border: #36312d;
+    --color-accent: #ff6b5e;
+    --color-accent-contrast: #1a0806;
+    --color-like: #ff5c7c;
+    --color-dislike: #b5aea7;
+    --color-error-bg: #3b1219;
+    --color-error-text: #ffb3c1;
+    --color-backdrop: rgba(0, 0, 0, 0.7);
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4);
+    color-scheme: dark;
+  }
+}
+
+/* 2. Base ------------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* 3. Provided components (Hero, ProjectCard) -------------------------------- */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 3rem 0 2.5rem;
+}
+
+.hero__eyebrow {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.hero__title {
+  margin: 0.25rem 0 0.75rem;
+  font-size: clamp(2.5rem, 7vw, 4rem);
+  line-height: 1;
+  color: var(--color-accent);
+}
+
+.hero__tagline {
+  margin: 0;
+  max-width: 34rem;
+  font-size: 1.0625rem;
+  color: var(--color-muted);
+}
+
+.hero__art {
+  flex: 0 0 auto;
+  width: min(240px, 40vw);
+  color: var(--color-accent);
+}
+
+.hero__star {
+  fill: var(--color-gold);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.card__main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 1.25rem 1.25rem 1rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.card__rank {
+  align-self: flex-start;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.card__title {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.card__blurb {
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+}
+
+.card__more {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  color: var(--color-accent);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.card__actions {
+  display: flex;
+  border-top: 1px solid var(--color-border);
+}
+
+.vote {
+  display: inline-flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 0.625rem;
+  border: 0;
+  background: none;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.vote + .vote {
+  border-left: 1px solid var(--color-border);
+}
+
+.vote:hover:not(:disabled) {
+  background: var(--color-bg);
+}
+
+.vote:disabled {
+  opacity: 0.45;
+  cursor: progress;
+}
+
+.vote__icon {
+  width: 1.125rem;
+  height: 1.125rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+}
+
+.vote--like:hover:not(:disabled) {
+  color: var(--color-like);
+}
+
+.vote--like:hover:not(:disabled) .vote__icon {
+  fill: currentColor;
+}
+
+.vote--dislike:hover:not(:disabled) {
+  color: var(--color-dislike);
+}
+
+.vote__crack {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* 4. Classes for YOU to use in App.jsx --------------------------------------
+   .page                  outer wrapper for the whole page (centers content)
+   .section               wrapper for the spotlight section
+   .section-title         "Previous Winners Spotlight" heading, ruled on both sides
+   .project-grid          put this on a <ul>; each card goes in an <li>
+   .status                a centered message (e.g. "Loading projects…")
+   .status--error         add to .status for an error message
+   .btn                   a primary button (e.g. "Try again")
+   .detail-backdrop       full-screen dimmed overlay behind the detail view
+   .detail                the detail panel itself (put it inside .detail-backdrop)
+   .detail__close         the close (×) button, positioned top-right of .detail
+   .detail__image         the project image
+   .detail__body          padded area under the image
+   .detail__rank          small label, e.g. "Rank #2"
+   .detail__title         the project name
+   .detail__description   the long description
+   -------------------------------------------------------------------------- */
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 1.25rem 4rem;
+}
+
+.section {
+  padding-top: 1rem;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 0 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.section-title::before,
+.section-title::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background: var(--color-border);
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+  padding: 2rem 1rem;
+  border-radius: var(--radius);
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.status p {
+  margin: 0;
+}
+
+.status--error {
+  padding: 1rem;
+  background: var(--color-error-bg);
+  color: var(--color-error-text);
+}
+
+.btn {
+  padding: 0.5rem 1.125rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:hover {
+  filter: brightness(1.1);
+}
+
+.detail-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: var(--color-backdrop);
+  animation: fade-in 0.15s ease;
+}
+
+.detail {
+  position: relative;
+  width: min(640px, 100%);
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-dialog);
+  animation: rise-in 0.2s ease;
+}
+
+.detail__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 1.375rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.detail__image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--color-border);
+}
+
+.detail__body {
+  padding: 1.5rem;
+}
+
+.detail__rank {
+  margin: 0;
+  color: var(--color-accent);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.detail__title {
+  margin: 0.25rem 0 0.75rem;
+  font-size: 1.625rem;
+  line-height: 1.2;
+}
+
+.detail__description {
+  margin: 0;
+  color: var(--color-text);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* 5. Small screens --------------------------------------------------------- */
+@media (max-width: 600px) {
+  .hero {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+
+  .hero__art {
+    width: 160px;
+  }
+}
